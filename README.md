@@ -1,2 +1,572 @@
-# bllults.github.io
-test
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akcay Service | Infra & Energie Specialisten</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Kurumsal Font Ayarları */
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3, h4, .brand-font { font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; }
+        
+        /* Özel Renk Paleti */
+        :root {
+            --primary: #0F172A;   /* Derin Lacivert */
+            --accent: #FF6600;    /* Enexis/Güvenlik Turuncusu */
+            --accent-hover: #E65C00;
+        }
+
+        /* Tailwind Config Genişletme (Script içinde yapılamadığı için burada manuel classlar tanımlıyoruz) */
+        .bg-primary-dark { background-color: var(--primary); }
+        .text-accent { color: var(--accent); }
+        .bg-accent { background-color: var(--accent); }
+        .hover-bg-accent:hover { background-color: var(--accent-hover); }
+        
+        /* Animasyonlar */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header Scroll Efekti */
+        .scrolled-header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        /* Hero Gradient */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.6) 100%);
+        }
+        
+        /* Kart Hover Efektleri */
+        .service-card:hover i {
+            transform: scale(1.1) rotate(5deg);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 overflow-x-hidden">
+
+    <!-- === NAVIGATION === -->
+    <header id="main-header" class="fixed w-full top-0 z-50 transition-all duration-300 py-6 bg-transparent text-white">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-accent rounded flex items-center justify-center text-white font-bold text-xl brand-font group-hover:rotate-12 transition-transform">A</div>
+                <div class="flex flex-col">
+                    <span class="brand-font text-2xl font-bold leading-none text-slate-800 header-text-color transition-colors">AKCAY</span>
+                    <span class="text-xs font-medium tracking-widest uppercase text-slate-600 header-text-color transition-colors">SERVICE</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex gap-8 items-center">
+                <a href="#diensten" class="text-sm font-semibold uppercase tracking-wide hover:text-accent transition-colors text-slate-800 header-text-color">Diensten</a>
+                <a href="#projecten" class="text-sm font-semibold uppercase tracking-wide hover:text-accent transition-colors text-slate-800 header-text-color">Projecten</a>
+                <a href="#certificaten" class="text-sm font-semibold uppercase tracking-wide hover:text-accent transition-colors text-slate-800 header-text-color">Certificaten</a>
+                <a href="#contact" class="bg-accent hover-bg-accent text-white px-6 py-2.5 rounded font-bold shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-0.5">
+                    Offerte Aanvragen
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-800 header-text-color">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-white shadow-xl py-4 px-6 flex flex-col gap-4 hidden border-t border-gray-100">
+            <a href="#diensten" class="text-slate-800 font-semibold py-2 border-b border-gray-100">Diensten</a>
+            <a href="#projecten" class="text-slate-800 font-semibold py-2 border-b border-gray-100">Projecten</a>
+            <a href="#certificaten" class="text-slate-800 font-semibold py-2 border-b border-gray-100">Certificaten</a>
+            <a href="#contact" class="bg-accent text-white text-center py-3 rounded font-bold">Offerte Aanvragen</a>
+        </div>
+    </header>
+
+    <!-- === HERO SECTION === -->
+    <section class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1498084393753-b411b2d26b34?q=80&w=1932&auto=format&fit=crop" 
+                 alt="High Voltage Infrastructure Netherlands" 
+                 class="w-full h-full object-cover object-center animate-pulse-slow">
+        </div>
+        <div class="absolute inset-0 hero-overlay z-10"></div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-6 relative z-20 pt-20">
+            <div class="max-w-3xl fade-in-up">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-300 text-sm font-semibold mb-6 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                    Beschikbaar voor nieuwe projecten 2024
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-lg">
+                    MEESTERS IN <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">ONDERGRONDSE INFRA</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-xl leading-relaxed">
+                    Uw gecertificeerde partner voor middenspanning, laagspanning en openbare verlichting. Wij bouwen de energieaders van Nederland.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#diensten" class="bg-accent hover-bg-accent text-white px-8 py-4 rounded font-bold text-lg text-center shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        Onze Diensten <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="bg-white/10 backdrop-blur-md border border-white/30 text-white hover:bg-white hover:text-slate-900 px-8 py-4 rounded font-bold text-lg text-center transition-all flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-phone"></i> Contact Opnemen
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce z-20">
+            <i class="ph-bold ph-caret-down text-3xl opacity-70"></i>
+        </div>
+    </section>
+
+    <!-- === STATS COUNTER === -->
+    <div class="bg-slate-900 py-12 relative z-30 -mt-4 shadow-2xl">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-700/50">
+                <div class="fade-in-up" style="transition-delay: 0.1s">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-1 font-mono">10+</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-wider">Jaren Ervaring</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 0.2s">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-1 font-mono">500+</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-wider">Projecten</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 0.3s">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-1 font-mono">100%</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-wider">Gecertificeerd</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 0.4s">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-1 font-mono">24/7</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-wider">Service</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === SERVICES SECTION === -->
+    <section id="diensten" class="py-24 bg-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-full -mr-32 -mt-32 opacity-50"></div>
+
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 max-w-2xl mx-auto fade-in-up">
+                <h4 class="text-accent font-bold uppercase tracking-widest mb-2">Onze Expertise</h4>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Technische Precisie. <br>Ongekende Kwaliteit.</h2>
+                <p class="text-slate-600 text-lg">
+                    Wij zijn gespecialiseerd in complexe energievraagstukken voor netbeheerders en aannemers.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="service-card group bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 fade-in-up">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center text-blue-900 mb-6 transition-transform duration-300">
+                        <i class="ph-fill ph-lightning text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Middenspanning (MS)</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Montage, aansluiten en moffen van hoogwaardige MS-kabels. Expert in compactstations en transformatorhuisjes.
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-sm text-slate-700"><i class="ph-bold ph-check text-accent mr-2"></i> Eindsluitingen</li>
+                        <li class="flex items-center text-sm text-slate-700"><i class="ph-bold ph-check text-accent mr-2"></i> Kabelmoffen</li>
+                        <li class="flex items-center text-sm text-slate-700"><i class="ph-bold ph-check text-accent mr-2"></i> Schakelhandelingen</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card group bg-slate-900 p-8 rounded-2xl shadow-2xl transform md:-translate-y-4 fade-in-up" style="transition-delay: 0.1s">
+                    <div class="absolute top-0 right-0 bg-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAIR</div>
+                    <div class="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center text-white mb-6 transition-transform duration-300">
+                        <i class="ph-fill ph-users-three text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Kabelwerken & Infra</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Complete aanleg van kabeltracés voor woonwijken en industriegebieden. Van graafwerk tot oplevering.
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-sm text-gray-300"><i class="ph-bold ph-check text-accent mr-2"></i> Kabeltrekken</li>
+                        <li class="flex items-center text-sm text-gray-300"><i class="ph-bold ph-check text-accent mr-2"></i> Voorbereidende infra</li>
+                        <li class="flex items-center text-sm text-gray-300"><i class="ph-bold ph-check text-accent mr-2"></i> Straatwerk herstel</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card group bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 fade-in-up" style="transition-delay: 0.2s">
+                    <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6 transition-transform duration-300">
+                        <i class="ph-fill ph-siren text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Storing & Onderhoud</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        24/7 beschikbaar voor calamiteiten. Snel opsporen en verhelpen van kabelstoringen en defecten.
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-sm text-slate-700"><i class="ph-bold ph-check text-accent mr-2"></i> Storingsdienst</li>
+                        <li class="flex items-center text-sm text-slate-700"><i class="ph-bold ph-check text-accent mr-2"></i> Preventief onderhoud</li>
+                        <li class="flex items-center text-sm text-slate-700"><i class="ph-bold ph-check text-accent mr-2"></i> Inspecties (NEN)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === AI SAFETY TOOL (MODERNIZED) === -->
+    <section class="py-20 bg-slate-900 relative overflow-hidden">
+        <!-- Abstract Background -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <!-- Text Side -->
+                <div class="lg:w-1/2 fade-in-up">
+                    <div class="inline-block px-3 py-1 rounded-full border border-blue-500/30 bg-blue-900/20 text-blue-300 text-xs font-bold mb-4">
+                        <i class="ph-fill ph-robot mr-1"></i> POWERED BY GEMINI AI
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-6">Slimme Veiligheid (LMRA)</h2>
+                    <p class="text-gray-400 text-lg mb-8">
+                        Veiligheid zit in ons DNA. Probeer onze interactieve tool: voer een werkzaamheid in en onze AI genereert direct een risicoanalyse op basis van VIAG en BEI normen.
+                    </p>
+                    
+                    <!-- Interactive Features List -->
+                    <div class="flex gap-6">
+                        <div class="flex flex-col">
+                            <span class="text-accent font-bold text-2xl">0.2s</span>
+                            <span class="text-xs text-gray-500 uppercase">Generatietijd</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-accent font-bold text-2xl">VCA</span>
+                            <span class="text-xs text-gray-500 uppercase">Compliant</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Tool Side -->
+                <div class="lg:w-1/2 w-full fade-in-up" style="transition-delay: 0.2s">
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-2xl relative group hover:border-accent/50 transition-colors">
+                        <!-- Glow Effect -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-orange-600 rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-1000"></div>
+                        
+                        <div class="relative bg-slate-800 rounded-xl p-2">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Beschrijf de taak (bv: graven in kleigrond)</label>
+                            <div class="flex gap-2 mb-4">
+                                <input type="text" id="task-input" 
+                                    class="flex-1 bg-slate-900 border border-slate-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                                    placeholder="Type hier uw werkzaamheid...">
+                                <button id="generate-btn" class="bg-accent hover-bg-accent text-white px-6 rounded-lg font-bold transition-colors flex items-center justify-center min-w-[60px]">
+                                    <i class="ph-bold ph-paper-plane-right text-xl"></i>
+                                </button>
+                            </div>
+
+                            <!-- Terminal Output -->
+                            <div id="result-area" class="bg-black rounded-lg p-4 font-mono text-sm h-64 overflow-y-auto border border-slate-700/50 shadow-inner">
+                                <div class="flex items-center gap-2 text-gray-500 mb-2 border-b border-gray-800 pb-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <span class="ml-2">security_terminal.exe</span>
+                                </div>
+                                <div id="placeholder-text" class="text-gray-600">
+                                    > Wachten op input...<br>
+                                    > AI module standby...
+                                </div>
+                                <div id="loader" class="hidden text-accent animate-pulse">
+                                    > Analyseren van risico's...<br>
+                                    > Raadplegen VIAG database...<br>
+                                    > Genereren rapport...
+                                </div>
+                                <div id="safety-output" class="text-green-400 hidden whitespace-pre-wrap leading-relaxed"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === PROJECT GALLERY === -->
+    <section id="projecten" class="py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Onze Projecten</h2>
+                <p class="text-slate-600">Een greep uit onze recente werkzaamheden in Nederland.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="group relative h-72 rounded-2xl overflow-hidden cursor-pointer fade-in-up">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Kabelwerk">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white p-4 text-center">
+                        <h3 class="text-xl font-bold text-accent mb-2">Wijkrenovatie Brabant</h3>
+                        <p class="text-sm">Vervangen 10kV bekabeling en aansluiten nieuwe trafo.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="group relative h-72 rounded-2xl overflow-hidden cursor-pointer fade-in-up" style="transition-delay: 0.1s">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Graafwerk">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white p-4 text-center">
+                        <h3 class="text-xl font-bold text-accent mb-2">Industrie Venlo</h3>
+                        <p class="text-sm">Aanleg zware stroomvoorziening voor logistiek centrum.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="group relative h-72 rounded-2xl overflow-hidden cursor-pointer fade-in-up" style="transition-delay: 0.2s">
+                    <img src="https://plus.unsplash.com/premium_photo-1663040178972-ee35daccdf81?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Kabelkast">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white p-4 text-center">
+                        <h3 class="text-xl font-bold text-accent mb-2">Storing Rotterdam</h3>
+                        <p class="text-sm">Noodreparatie mofverbinding in binnenstad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === CERTIFICATEN === -->
+    <section id="certificaten" class="py-16 bg-white border-t border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center items-center gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Mockup Sertifika Logoları -->
+                <div class="flex items-center gap-3 text-slate-800 font-bold text-xl border-2 border-slate-200 px-6 py-3 rounded-lg">
+                    <i class="ph-fill ph-shield-check text-3xl text-green-600"></i> VCA-VOL
+                </div>
+                <div class="flex items-center gap-3 text-slate-800 font-bold text-xl border-2 border-slate-200 px-6 py-3 rounded-lg">
+                    <i class="ph-fill ph-lightning text-3xl text-yellow-500"></i> BEI-VP
+                </div>
+                <div class="flex items-center gap-3 text-slate-800 font-bold text-xl border-2 border-slate-200 px-6 py-3 rounded-lg">
+                    <i class="ph-fill ph-fire text-3xl text-red-500"></i> VIAG-VOP
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer class="bg-primary-dark text-white pt-20 pb-10 border-t-4 border-accent">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-accent rounded flex items-center justify-center font-bold text-white brand-font">A</div>
+                        <span class="text-2xl font-bold brand-font tracking-wide">AKCAY SERVICE</span>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed mb-6 max-w-md">
+                        Uw specialist in ondergrondse infrastructuur. Wij staan voor kwaliteit, veiligheid en vakmanschap. Actief in heel Nederland.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph-fill ph-linkedin-logo text-xl"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent transition-colors"><i class="ph-fill ph-facebook-logo text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Snelle Links</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="#diensten" class="hover:text-accent transition-colors">Diensten</a></li>
+                        <li><a href="#projecten" class="hover:text-accent transition-colors">Projecten</a></li>
+                        <li><a href="#contact" class="hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div id="contact">
+                    <h4 class="text-lg font-bold mb-6 text-white">Contact</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-map-pin text-accent mt-1"></i>
+                            <span>Hoofdstraat 123<br>5600 AA Eindhoven</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ph-fill ph-phone text-accent"></i>
+                            <span>+31 6 12 34 56 78</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ph-fill ph-envelope text-accent"></i>
+                            <span>info@akcayservice.nl</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ph-fill ph-identification-card text-accent"></i>
+                            <span>KVK: 98765432</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; <span id="year"></span> Akcay Service. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Scroll Animation Observer ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- Sticky Header & Text Color Change ---
+        const header = document.getElementById('main-header');
+        const headerTexts = document.querySelectorAll('.header-text-color');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+        // Başlangıçta (sayfa en üstte) text rengi beyaz olmalı
+        function updateHeaderColors(isScrolled) {
+            headerTexts.forEach(el => {
+                if (isScrolled) {
+                    el.classList.remove('text-white', 'opacity-90');
+                    el.classList.add('text-slate-800');
+                    mobileMenuBtn.classList.add('text-slate-800');
+                    mobileMenuBtn.classList.remove('text-white');
+                } else {
+                    el.classList.add('text-white', 'opacity-90');
+                    el.classList.remove('text-slate-800');
+                    mobileMenuBtn.classList.add('text-white');
+                    mobileMenuBtn.classList.remove('text-slate-800');
+                }
+            });
+        }
+
+        // Initial Check
+        updateHeaderColors(false);
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled-header');
+                updateHeaderColors(true);
+            } else {
+                header.classList.remove('scrolled-header');
+                updateHeaderColors(false);
+            }
+        });
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.replace('ph-x', 'ph-list');
+            } else {
+                icon.classList.replace('ph-list', 'ph-x');
+                // Menu açılınca header'ı beyaz yap ki okunsun
+                header.classList.add('scrolled-header');
+                updateHeaderColors(true);
+            }
+        });
+
+        // --- Year Update ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- Gemini API Integration (Mocked for UI Demo/Real Logic) ---
+        const generateBtn = document.getElementById('generate-btn');
+        const taskInput = document.getElementById('task-input');
+        const resultArea = document.getElementById('result-area');
+        const placeholderText = document.getElementById('placeholder-text');
+        const loader = document.getElementById('loader');
+        const safetyOutput = document.getElementById('safety-output');
+
+        generateBtn.addEventListener('click', async () => {
+            const task = taskInput.value.trim();
+            if (!task) return;
+
+            // UI State Change
+            placeholderText.classList.add('hidden');
+            safetyOutput.classList.add('hidden');
+            loader.classList.remove('hidden');
+            generateBtn.disabled = true;
+            generateBtn.classList.add('opacity-50');
+
+            const apiKey = ""; // API KEY BURAYA Gelecek
+            // API Key yoksa demo modu çalışsın diye hata yönetimi ekliyorum
+            
+            const systemPrompt = `
+                Je bent een strenge Nederlandse Veiligheidskundige (HVK) in de infratechniek.
+                Taak: Genereer een zeer beknopte LMRA (Laatste Minuut Risico Analyse) voor de taak: "${task}".
+                Format:
+                1. **Grootste Risico:** [1 zin]
+                2. **Benodigde PBM:** [Lijstje met iconen]
+                3. **Beheersmaatregel:** [1 zin technisch advies conform VIAG/BEI]
+                
+                Hou het technisch en professioneel. Gebruik emoji's waar relevant.
+            `;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Maak een LMRA voor: ${task}` }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+
+                loader.classList.add('hidden');
+                safetyOutput.innerHTML = '> ANALYSE VOLTOOID:<br><br>' + text;
+                safetyOutput.classList.remove('hidden');
+
+            } catch (error) {
+                // Fallback Demo Response (API Key girilmediyse)
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    safetyOutput.innerHTML = `> <span class="text-red-400">LET OP: API Key ontbreekt. Demo Modus:</span><br><br>
+                    <strong>LMRA Analyse voor: ${task}</strong><br>
+                    ⚠️ <strong>Risico:</strong> Elektrocutiegevaar & Graafschade.<br>
+                    🛡️ <strong>PBM:</strong> Vlamvertragende kleding, Geïsoleerd gereedschap, Veiligheidshandschoenen.<br>
+                    ✅ <strong>Maatregel:</strong> Voer KLIC-melding uit en schakel spanning af volgens VIAG VOP procedure.`;
+                    safetyOutput.classList.remove('hidden');
+                }, 1500);
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('opacity-50');
+            }
+        });
+    </script>
+</body>
+</html>
