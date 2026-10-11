@@ -1,314 +1,191 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pure Code · Autonomous Database Intelligence & Systems Engine</title>
-    <meta name="description" content="Deterministic AI agents for mission-critical enterprise schemas and zero-telemetry native developer tools. Powered by Claude 3.5 Sonnet.">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23101c35'/><path d='M35 35 L20 50 L35 65 M55 30 L45 70 M65 35 L80 50 L65 65' stroke='%2316c6c2' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-
-    <!-- Fonts: Inter & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        void: '#070a13',
-                        surface: '#0f172a',
-                        surfaceBorder: '#1e293b',
-                        accent: '#16c6c2',
-                        accentHover: '#13ada9',
-                        navy: '#101c35',
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            background-color: #070a13;
-            color: #f1f5f9;
-        }
-        .code-glow {
-            background: radial-gradient(circle at 50% 0%, rgba(22, 198, 194, 0.12) 0%, transparent 60%);
-        }
-        .grid-pattern {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pure Code | AI database agents for enterprise Oracle and PostgreSQL</title>
+<meta name="description" content="PureSchema is an AI agent built on Claude that lets teams query large legacy Oracle and PostgreSQL schemas in plain language. Every SQL statement is validated before it runs.">
+<meta name="theme-color" content="#070a13">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23101c35'/><path d='M35 35 L20 50 L35 65 M55 30 L45 70 M65 35 L80 50 L65 65' stroke='%2316c6c2' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a13;--panel:#0f172a;--line:#1e293b;--text:#e8edf5;--muted:#9aa7bb;--accent:#16c6c2;--accent2:#3ddbd7;--ok:#6ee7b7}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
+header{position:sticky;top:0;z-index:10;background:rgba(7,10,19,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;font-weight:700;letter-spacing:-.01em}
+.mark{width:34px;height:34px;border-radius:8px;background:#101c35;border:1px solid rgba(22,198,194,.35);display:grid;place-items:center;font:500 .8rem 'JetBrains Mono',monospace;color:var(--accent)}
+nav{display:flex;align-items:center;gap:1.5rem;font-size:.9rem;color:var(--muted)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--text)}
+.btn{display:inline-block;padding:.75rem 1.3rem;border-radius:10px;background:var(--accent);color:#04201f;font-weight:600;font-size:.95rem;text-decoration:none;transition:background .15s}
+.btn:hover{background:var(--accent2)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--muted)}
+.btn.sm{padding:.5rem 1rem;font-size:.85rem}
+.hero{padding:5rem 0 3rem}
+h1{font-size:clamp(2.2rem,5.5vw,3.7rem);line-height:1.08;letter-spacing:-.03em;font-weight:700;max-width:16ch}
+.lede{margin-top:1.4rem;font-size:1.15rem;color:var(--muted);max-width:56ch}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+.term{margin-top:3.5rem;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.term-head{padding:.7rem 1rem;border-bottom:1px solid var(--line);font:400 .75rem 'JetBrains Mono',monospace;color:var(--muted);overflow-x:auto;white-space:nowrap}
+.term pre{padding:1.2rem 1.25rem;font:400 .8rem/1.7 'JetBrains Mono',monospace;color:#cbd5e1;overflow-x:auto}
+.k{color:var(--accent)}.ok{color:var(--ok)}.dim{color:#64748b}
+.cap{margin-top:.7rem;font-size:.8rem;color:var(--muted)}
+section{padding:4.5rem 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(1.6rem,3.2vw,2.2rem);letter-spacing:-.02em;line-height:1.2;font-weight:700;max-width:24ch}
+.sub{margin-top:.9rem;color:var(--muted);max-width:60ch}
+.feature{margin-top:2.5rem;padding:2rem;border:1px solid rgba(22,198,194,.35);border-radius:16px;background:linear-gradient(180deg,rgba(22,198,194,.06),transparent)}
+.feature h3{font-size:1.4rem;letter-spacing:-.01em}
+.feature p{margin-top:.7rem;color:var(--muted);max-width:62ch}
+.status{display:inline-block;margin-bottom:.9rem;padding:.2rem .65rem;border-radius:999px;font-size:.78rem;font-weight:500;background:rgba(110,231,183,.1);color:var(--ok)}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;font:400 .75rem 'JetBrains Mono',monospace;color:var(--muted)}
+.tags span{padding:.2rem .6rem;border:1px solid var(--line);border-radius:6px}
+.others{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem}
+.others article{padding:1.5rem 0 0;border-top:1px solid var(--line)}
+.others h3{font-size:1.05rem}
+.others p{margin-top:.5rem;color:var(--muted);font-size:.95rem}
+.steps{margin-top:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;padding-top:1rem;border-top:2px solid var(--accent)}
+.steps li::before{content:counter(s);font:500 .85rem 'JetBrains Mono',monospace;color:var(--accent)}
+.steps h3{margin:.3rem 0 .5rem;font-size:1.1rem}
+.steps p{color:var(--muted);font-size:.95rem}
+.note{margin-top:2.5rem;padding:1.2rem 1.4rem;border-left:3px solid var(--accent);background:var(--panel);border-radius:0 10px 10px 0;color:var(--muted);max-width:70ch}
+.note strong{color:var(--text);font-weight:600}
+.contact{text-align:left}
+footer{border-top:1px solid var(--line);padding:2rem 0;font-size:.82rem;color:var(--muted)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem}
+@media (max-width:760px){
+ nav a:not(.btn){display:none}
+ .hero{padding:3rem 0 2rem}
+ .others,.steps{grid-template-columns:1fr}
+ section{padding:3rem 0}
+}
+</style>
 </head>
-<body class="font-sans antialiased selection:bg-accent selection:text-void relative min-h-screen">
+<body>
 
-    <!-- Top Glow & Grid Texture -->
-    <div class="absolute inset-0 code-glow pointer-events-none"></div>
-    <div class="absolute inset-0 grid-pattern pointer-events-none opacity-40"></div>
+<header>
+ <div class="wrap bar">
+  <a class="brand" href="#top"><span class="mark">&lt;/&gt;</span>Pure Code</a>
+  <nav aria-label="Main">
+   <a href="#products">Products</a>
+   <a href="#how">How it works</a>
+   <a href="mailto:hi@pure-code.nl">Contact</a>
+   <a class="btn sm" href="#pilot">Request a pilot</a>
+  </nav>
+ </div>
+</header>
 
-    <!-- Navigation -->
-    <nav class="relative z-50 border-b border-surfaceBorder/60 bg-void/80 backdrop-blur-md sticky top-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-navy border border-accent/30 flex items-center justify-center font-mono font-bold text-accent text-sm">
-                    &lt;/&gt;
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-bold tracking-tight text-white text-base">PURE CODE</span>
-                    <span class="text-[10px] font-mono text-gray-400 tracking-widest uppercase">Systems & AI Lab</span>
-                </div>
-                <span class="hidden sm:inline-block ml-3 px-2 py-0.5 rounded text-[11px] font-mono bg-accent/10 border border-accent/20 text-accent">
-                    v1.4.0-stable
-                </span>
-            </div>
+<main id="top">
+ <div class="wrap hero">
+  <h1>Ask your enterprise database in plain language.</h1>
+  <p class="lede">PureSchema is an AI agent built on Claude. It reads your full legacy Oracle or PostgreSQL schema and writes SQL that is checked before it ever runs.</p>
+  <div class="cta">
+   <a class="btn" href="#pilot">Request a pilot</a>
+   <a class="btn ghost" href="#example">See an example</a>
+  </div>
 
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#suite" class="hover:text-accent transition">Product Suite</a>
-                <a href="#architecture" class="hover:text-accent transition">Agent Architecture</a>
-                <a href="#benchmarks" class="hover:text-accent transition">Telemetry & Security</a>
-                <a href="mailto:hi@pure-code.nl" class="hover:text-white transition font-mono text-xs">Contact</a>
-            </div>
+  <div class="term" id="example">
+   <div class="term-head">pure-agent --tenant=demo-oracle --model=claude-sonnet-5-5</div>
+<pre><span class="dim">-- Schema loaded into cached context</span>
+<span class="k">schema</span>    1,480 tables, 280 PL/SQL packages, 4,200 constraints
+<span class="k">question</span>  Container turnover with demurrage penalty risk in Q3?
 
-            <div class="flex items-center gap-3">
-                <a href="#waitlist" class="px-4 py-2 rounded-lg bg-accent text-void font-semibold text-xs tracking-wider uppercase hover:bg-accentHover transition font-mono flex items-center gap-2">
-                    <span>Pilot Access</span>
-                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </a>
-            </div>
-        </div>
-    </nav>
+SELECT c.container_id, c.carrier_code,
+       SUM(d.penalty_rate * d.days_overdue) AS total_demurrage
+FROM freight_containers c
+JOIN demurrage_ledger d ON c.shipment_id = d.shipment_id
+WHERE c.status = 'HELD'
+  AND d.filing_date BETWEEN DATE '2026-07-01' AND DATE '2026-09-30'
+GROUP BY c.container_id, c.carrier_code
+HAVING SUM(d.penalty_rate * d.days_overdue) &gt; 5000;
 
-    <!-- Hero Section (Rush.tools style console badge & headline) -->
-    <main class="relative z-10 pt-16 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
-        <div class="flex flex-col items-center sm:items-start max-w-4xl">
-            
-            <!-- System Status Pill -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-surfaceBorder text-xs font-mono text-gray-300 mb-8">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-gray-400">PureEngine OS</span>
-                <span class="text-gray-600">·</span>
-                <span class="text-accent">Claude 3.5 Sonnet & MCP Integrated</span>
-            </div>
+<span class="ok">✓</span> syntax parsed
+<span class="ok">✓</span> all tables and columns exist in the schema
+<span class="ok">✓</span> role-based masking applied
+<span class="ok">✓</span> estimated cost within limit</pre>
+  </div>
+  <p class="cap">Illustrative session on a sample logistics schema.</p>
+ </div>
 
-            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
-                Deterministic Database AI. <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-400">Strictly Zero-Telemetry</span> Native Tools.
-            </h1>
+ <section id="products">
+  <div class="wrap">
+   <h2>Products</h2>
+   <p class="sub">One AI agent for enterprise databases, and two native apps that keep your data on your device.</p>
 
-            <p class="text-lg sm:text-xl text-gray-400 font-normal leading-relaxed mb-10 max-w-2xl">
-                We engineer autonomous LLM reasoning loops for mission-critical enterprise databases (Oracle, PostgreSQL) alongside lightweight, forensic-grade local utilities. No hallucinations. No leaked schemas.
-            </p>
+   <article class="feature">
+    <span class="status">2 pilots active</span>
+    <h3>PureSchema database agent</h3>
+    <p>Ask a question in plain language and get SQL for Oracle or PostgreSQL. Claude reads the whole schema, including PL/SQL packages and constraints, so queries use the tables and columns that actually exist.</p>
+    <div class="tags"><span>Built on Claude</span><span>Oracle</span><span>PostgreSQL</span><span>MCP</span></div>
+   </article>
 
-            <div class="flex flex-wrap items-center gap-4 justify-center sm:justify-start">
-                <a href="#waitlist" class="px-6 py-3.5 rounded-xl bg-accent text-void font-bold text-sm tracking-wide hover:bg-accentHover transition shadow-lg shadow-accent/10 flex items-center gap-2 font-mono">
-                    <i class="fa-solid fa-cube text-xs"></i>
-                    <span>REQUEST ENTERPRISE PILOT</span>
-                </a>
-                <a href="#console-preview" class="px-6 py-3.5 rounded-xl bg-surface border border-surfaceBorder text-gray-300 font-mono text-sm hover:text-white hover:border-gray-600 transition flex items-center gap-2">
-                    <i class="fa-solid fa-terminal text-xs text-accent"></i>
-                    <span>rush://terminal</span>
-                </a>
-            </div>
-        </div>
+   <div class="others">
+    <article>
+     <h3>VaultMail MBOX Inspector</h3>
+     <p>Search multi-gigabyte MBOX, PST and EML archives offline on macOS and iOS. Everything runs on your device, with no telemetry.</p>
+     <div class="tags"><span>Swift</span><span>Offline</span></div>
+    </article>
+    <article>
+     <h3>DopaFlow</h3>
+     <p>A native iOS app for tasks and habits, built in SwiftUI. Focus blocks and rewards help you keep a routine. Data stays on your device.</p>
+     <div class="tags"><span>SwiftUI</span><span>CoreData</span></div>
+    </article>
+   </div>
+  </div>
+ </section>
 
-        <!-- Interactive Terminal / Console Preview Mockup (Rush.tools CLI style) -->
-        <div id="console-preview" class="mt-16 rounded-2xl border border-surfaceBorder bg-surface/90 backdrop-blur-md shadow-2xl overflow-hidden font-mono text-left text-xs">
-            <div class="bg-void/80 px-4 py-3 border-b border-surfaceBorder flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    <span class="ml-2 text-gray-500 text-[11px]">pure-agent --tenant=enterprise-oracle --model=claude-3-5-sonnet</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-400 text-[11px]">
-                    <span class="text-emerald-400">● PROMPT CACHING ACTIVE (184k tokens)</span>
-                    <span>LATENCY: 412ms</span>
-                </div>
-            </div>
-            <div class="p-6 space-y-3 text-gray-300 leading-relaxed overflow-x-auto">
-                <div class="text-gray-500">// Ingesting enterprise PL/SQL package & ER schema constraints...</div>
-                <div><span class="text-accent">&gt; INGESTION:</span> Loaded 1,480 tables, 280 packages, 4,200 constraints into cached context.</div>
-                <div><span class="text-accent">&gt; QUERY INTENT:</span> "Aggregate intermodal container turnover with demurrage penalty risk across Q3."</div>
-                <div class="p-3 rounded bg-void/60 border border-surfaceBorder/80 text-emerald-300">
-                    <span class="text-gray-500">Claude Agent Execution Plan:</span><br>
-                    SELECT c.container_id, c.carrier_code, SUM(d.penalty_rate * d.days_overdue) AS total_demurrage<br>
-                    FROM freight_containers c JOIN demurrage_ledger d ON c.shipment_id = d.shipment_id<br>
-                    WHERE c.status = 'HELD' AND d.filing_date BETWEEN '2026-07-01' AND '2026-09-30'<br>
-                    GROUP BY c.container_id, c.carrier_code HAVING SUM(d.penalty_rate * d.days_overdue) &gt; 5000;
-                </div>
-                <div class="text-gray-400"><span class="text-emerald-400">✓ DETERMINISTIC VALIDATION:</span> Syntax 100% matched. Query Cost: 0.04s. Zero schema hallucination.</div>
-            </div>
-        </div>
-    </main>
+ <section id="how">
+  <div class="wrap">
+   <h2>How PureSchema uses Claude</h2>
+   <p class="sub">Large schemas are too big for a generic chatbot to handle reliably. PureSchema keeps the whole schema in context and adds its own checks around every answer.</p>
 
-    <!-- Product Suite / The Matrix (Rush.tools style periodic layout) -->
-    <section id="suite" class="py-20 border-t border-surfaceBorder/80 bg-void relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                <div>
-                    <span class="text-accent font-mono text-xs tracking-widest uppercase">The Ecosystem</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Active Systems &amp; Developer Tools</h2>
-                </div>
-                <div class="text-xs font-mono text-gray-400 flex items-center gap-3">
-                    <span class="px-2.5 py-1 rounded bg-surface border border-surfaceBorder text-accent font-bold">3 ENGINES</span>
-                    <span>Ready for Enterprise Evaluation</span>
-                </div>
-            </div>
+   <ol class="steps">
+    <li>
+     <h3>Load the schema</h3>
+     <p>DDL, PL/SQL packages and constraints go into Claude's context once. Prompt caching keeps follow-up questions fast and cheaper to run.</p>
+    </li>
+    <li>
+     <h3>Plan the query</h3>
+     <p>Claude breaks the question down and uses tool calls through MCP to inspect the database structure before it writes SQL.</p>
+    </li>
+    <li>
+     <h3>Validate before running</h3>
+     <p>Each statement is parsed, checked against the schema, filtered through role-based masking and cost-estimated before it reaches your database.</p>
+    </li>
+   </ol>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+   <p class="note"><strong>Your data stays with you.</strong> Table rows stay in your environment. Claude receives the schema structure and the question, not your records.</p>
+  </div>
+ </section>
 
-                <!-- Product 1: PureDB Schema Agent -->
-                <div class="p-6 rounded-2xl bg-surface/60 border border-surfaceBorder hover:border-accent/50 transition flex flex-col justify-between group">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="text-xs font-mono px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">AGENT #01</span>
-                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded">PILOT ACTIVE</span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-navy border border-accent/20 text-accent flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
-                            <i class="fa-solid fa-brain"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">PureSchema DB Agent</h3>
-                        <p class="text-sm text-gray-400 leading-relaxed mb-6">
-                            Deterministic Enterprise AI reasoning layer for Oracle & PostgreSQL backends. Leverages Claude's 200k context window and Prompt Caching to map massive legacy DDLs with zero hallucination.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-surfaceBorder/80 flex flex-wrap gap-2 text-[11px] font-mono text-gray-400">
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Claude 3.5 Sonnet</span>
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">PL/SQL</span>
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">MCP</span>
-                    </div>
-                </div>
+ <section id="pilot">
+  <div class="wrap contact">
+   <h2>Become a design partner</h2>
+   <p class="sub">We are onboarding a small number of companies in logistics, intermodal freight and database modernization across Europe. Tell us about your database and what your team needs to ask it.</p>
+   <div class="cta">
+    <a class="btn" href="mailto:hi@pure-code.nl?subject=PureSchema%20pilot%20request">Email hi@pure-code.nl</a>
+   </div>
+  </div>
+ </section>
+</main>
 
-                <!-- Product 2: Local-First Mail & MBOX Viewer -->
-                <div class="p-6 rounded-2xl bg-surface/60 border border-surfaceBorder hover:border-accent/50 transition flex flex-col justify-between group">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="text-xs font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">TOOL #02</span>
-                            <span class="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded">LOCAL-FIRST</span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-navy border border-accent/20 text-accent flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
-                            <i class="fa-solid fa-box-archive"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">VaultMail MBOX Inspector</h3>
-                        <p class="text-sm text-gray-400 leading-relaxed mb-6">
-                            Air-gapped, zero-telemetry offline parsing engine for multi-gigabyte MBOX, PST, and EML archives. Memory-mapped streaming with instant full-text query indexing on macOS and iOS.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-surfaceBorder/80 flex flex-wrap gap-2 text-[11px] font-mono text-gray-400">
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Swift</span>
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Zero Telemetry</span>
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Offline</span>
-                    </div>
-                </div>
-
-                <!-- Product 3: DopaFlow Habit Architecture -->
-                <div class="p-6 rounded-2xl bg-surface/60 border border-surfaceBorder hover:border-accent/50 transition flex flex-col justify-between group">
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">SYSTEM #03</span>
-                            <span class="text-[11px] font-mono text-purple-400 bg-purple-950/40 px-2 py-0.5 rounded">IOS 18 NATIVE</span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-navy border border-accent/20 text-accent flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
-                            <i class="fa-solid fa-cubes-stacked"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">DopaFlow Behavioral Engine</h3>
-                        <p class="text-sm text-gray-400 leading-relaxed mb-6">
-                            Neuro-behavioral task gamification framework built natively in SwiftUI. Optimizes cognitive execution cycles, sustained focus blocks, and habit consolidation through reinforcement loops.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-surfaceBorder/80 flex flex-wrap gap-2 text-[11px] font-mono text-gray-400">
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">SwiftUI</span>
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">CoreData</span>
-                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Local Storage</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Guarantees (Inspired by Rush.tools: Zero Telemetry, Speed, Forensic Grade) -->
-    <section id="benchmarks" class="py-20 border-t border-surfaceBorder/80 bg-surface/30 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-accent font-mono text-xs tracking-widest uppercase">System Specifications</span>
-                <h2 class="text-3xl font-bold text-white mt-2">Engineered for Enterprise Paranoia</h2>
-                <p class="text-gray-400 text-sm mt-3">Why European enterprise infrastructure teams trust Pure Code architectures.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                <div class="p-6 rounded-xl bg-void border border-surfaceBorder">
-                    <div class="text-accent font-mono text-2xl font-bold mb-2">0 B</div>
-                    <h4 class="text-white font-semibold mb-2">Zero Data Retention</h4>
-                    <p class="text-gray-400 text-xs leading-relaxed">Client schemas and data never leave your virtual private cloud. Multi-tenant LLM interactions operate through strictly ephemeral contexts.</p>
-                </div>
-                <div class="p-6 rounded-xl bg-void border border-surfaceBorder">
-                    <div class="text-accent font-mono text-2xl font-bold mb-2">&lt; 500 ms</div>
-                    <h4 class="text-white font-semibold mb-2">Cached Schema Latency</h4>
-                    <p class="text-gray-400 text-xs leading-relaxed">Leverages state-of-the-art Claude Prompt Caching across 150k+ tokens of DDL definitions, delivering instant sub-second multi-turn reasoning.</p>
-                </div>
-                <div class="p-6 rounded-xl bg-void border border-surfaceBorder">
-                    <div class="text-accent font-mono text-2xl font-bold mb-2">100%</div>
-                    <h4 class="text-white font-semibold mb-2">Deterministic SQL</h4>
-                    <p class="text-gray-400 text-xs leading-relaxed">Unlike naive chatbots, every generated relational transaction passes syntax trees, role-based masking, and query-cost calculators before dispatch.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pilot Access / Waitlist (Replaces the generic contact form) -->
-    <section id="waitlist" class="py-24 border-t border-surfaceBorder bg-void relative z-10">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-            <span class="text-accent font-mono text-xs tracking-widest uppercase">Enterprise Enrollment</span>
-            <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">Request Private Beta &amp; Pilot Access</h2>
-            <p class="text-gray-400 text-sm mb-8 leading-relaxed">
-                Currently onboarding select design partners across logistics, intermodal freight, and enterprise relational database modernization in Europe.
-            </p>
-
-            <form action="mailto:hi@pure-code.nl" method="GET" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-                <input type="email" name="subject" value="Enterprise Pilot Request - Pure Code" class="hidden">
-                <input type="email" placeholder="enter your corporate email..." required class="flex-1 bg-surface border border-surfaceBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-accent font-mono placeholder:text-gray-600">
-                <button type="submit" class="px-6 py-3 rounded-xl bg-accent text-void font-bold text-xs tracking-wider uppercase hover:bg-accentHover transition font-mono whitespace-nowrap">
-                    Join Waitlist →
-                </button>
-            </form>
-            <p class="text-[11px] font-mono text-gray-500 mt-4">Direct founder dispatch: <a href="mailto:hi@pure-code.nl" class="text-gray-400 underline hover:text-accent">hi@pure-code.nl</a></p>
-        </div>
-    </section>
-
-    <!-- Footer with Dutch Legal Compliance (KVK) & Status -->
-    <footer class="border-t border-surfaceBorder/60 bg-void py-12 relative z-10 text-xs text-gray-500 font-mono">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span class="text-gray-400">ALL SYSTEMS NOMINAL · PURE-CODE.NL</span>
-            </div>
-            
-            <div class="flex flex-wrap items-center justify-center gap-6 text-gray-400">
-                <span>KVK: 99401456</span>
-                <span>Oss, Netherlands</span>
-                <a href="mailto:hi@pure-code.nl" class="hover:text-accent transition">hi@pure-code.nl</a>
-            </div>
-
-            <div class="text-gray-600">
-                © 2026 Pure Code.
-            </div>
-        </div>
-    </footer>
+<footer>
+ <div class="wrap foot">
+  <span>Pure Code, Oss, Netherlands. KVK 99401456</span>
+  <span>PureSchema is built on Claude by Anthropic.</span>
+  <span>© 2026 Pure Code</span>
+ </div>
+</footer>
 
 </body>
 </html>
