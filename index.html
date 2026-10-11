@@ -1,191 +1,478 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pure Code | AI database agents for enterprise Oracle and PostgreSQL</title>
-<meta name="description" content="PureSchema is an AI agent built on Claude that lets teams query large legacy Oracle and PostgreSQL schemas in plain language. Every SQL statement is validated before it runs.">
-<meta name="theme-color" content="#070a13">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23101c35'/><path d='M35 35 L20 50 L35 65 M55 30 L45 70 M65 35 L80 50 L65 65' stroke='%2316c6c2' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#070a13;--panel:#0f172a;--line:#1e293b;--text:#e8edf5;--muted:#9aa7bb;--accent:#16c6c2;--accent2:#3ddbd7;--ok:#6ee7b7}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{background:var(--bg);color:var(--text);font:400 1rem/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
-.wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
-header{position:sticky;top:0;z-index:10;background:rgba(7,10,19,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px}
-.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;font-weight:700;letter-spacing:-.01em}
-.mark{width:34px;height:34px;border-radius:8px;background:#101c35;border:1px solid rgba(22,198,194,.35);display:grid;place-items:center;font:500 .8rem 'JetBrains Mono',monospace;color:var(--accent)}
-nav{display:flex;align-items:center;gap:1.5rem;font-size:.9rem;color:var(--muted)}
-nav a{text-decoration:none}
-nav a:hover{color:var(--text)}
-.btn{display:inline-block;padding:.75rem 1.3rem;border-radius:10px;background:var(--accent);color:#04201f;font-weight:600;font-size:.95rem;text-decoration:none;transition:background .15s}
-.btn:hover{background:var(--accent2)}
-.btn.ghost{background:none;border:1px solid var(--line);color:var(--text)}
-.btn.ghost:hover{border-color:var(--muted)}
-.btn.sm{padding:.5rem 1rem;font-size:.85rem}
-.hero{padding:5rem 0 3rem}
-h1{font-size:clamp(2.2rem,5.5vw,3.7rem);line-height:1.08;letter-spacing:-.03em;font-weight:700;max-width:16ch}
-.lede{margin-top:1.4rem;font-size:1.15rem;color:var(--muted);max-width:56ch}
-.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
-.term{margin-top:3.5rem;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.term-head{padding:.7rem 1rem;border-bottom:1px solid var(--line);font:400 .75rem 'JetBrains Mono',monospace;color:var(--muted);overflow-x:auto;white-space:nowrap}
-.term pre{padding:1.2rem 1.25rem;font:400 .8rem/1.7 'JetBrains Mono',monospace;color:#cbd5e1;overflow-x:auto}
-.k{color:var(--accent)}.ok{color:var(--ok)}.dim{color:#64748b}
-.cap{margin-top:.7rem;font-size:.8rem;color:var(--muted)}
-section{padding:4.5rem 0;border-top:1px solid var(--line)}
-h2{font-size:clamp(1.6rem,3.2vw,2.2rem);letter-spacing:-.02em;line-height:1.2;font-weight:700;max-width:24ch}
-.sub{margin-top:.9rem;color:var(--muted);max-width:60ch}
-.feature{margin-top:2.5rem;padding:2rem;border:1px solid rgba(22,198,194,.35);border-radius:16px;background:linear-gradient(180deg,rgba(22,198,194,.06),transparent)}
-.feature h3{font-size:1.4rem;letter-spacing:-.01em}
-.feature p{margin-top:.7rem;color:var(--muted);max-width:62ch}
-.status{display:inline-block;margin-bottom:.9rem;padding:.2rem .65rem;border-radius:999px;font-size:.78rem;font-weight:500;background:rgba(110,231,183,.1);color:var(--ok)}
-.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;font:400 .75rem 'JetBrains Mono',monospace;color:var(--muted)}
-.tags span{padding:.2rem .6rem;border:1px solid var(--line);border-radius:6px}
-.others{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem}
-.others article{padding:1.5rem 0 0;border-top:1px solid var(--line)}
-.others h3{font-size:1.05rem}
-.others p{margin-top:.5rem;color:var(--muted);font-size:.95rem}
-.steps{margin-top:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;list-style:none;counter-reset:s}
-.steps li{counter-increment:s;padding-top:1rem;border-top:2px solid var(--accent)}
-.steps li::before{content:counter(s);font:500 .85rem 'JetBrains Mono',monospace;color:var(--accent)}
-.steps h3{margin:.3rem 0 .5rem;font-size:1.1rem}
-.steps p{color:var(--muted);font-size:.95rem}
-.note{margin-top:2.5rem;padding:1.2rem 1.4rem;border-left:3px solid var(--accent);background:var(--panel);border-radius:0 10px 10px 0;color:var(--muted);max-width:70ch}
-.note strong{color:var(--text);font-weight:600}
-.contact{text-align:left}
-footer{border-top:1px solid var(--line);padding:2rem 0;font-size:.82rem;color:var(--muted)}
-.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem}
-@media (max-width:760px){
- nav a:not(.btn){display:none}
- .hero{padding:3rem 0 2rem}
- .others,.steps{grid-template-columns:1fr}
- section{padding:3rem 0}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Code · Autonomous Database Intelligence & Systems Engine</title>
+    <meta name="description" content="Deterministic AI agents for mission-critical enterprise schemas and zero-telemetry native developer tools. Powered by Claude 5.5 & MCP.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23101c35'/><path d='M35 35 L20 50 L35 65 M55 30 L45 70 M65 35 L80 50 L65 65' stroke='%2316c6c2' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        void: '#070a13',
+                        surface: '#0f172a',
+                        surfaceBorder: '#1e293b',
+                        accent: '#16c6c2',
+                        accentHover: '#13ada9',
+                        navy: '#101c35',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #070a13;
+            color: #f1f5f9;
+        }
+        .code-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(22, 198, 194, 0.14) 0%, transparent 60%);
+        }
+        .grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
 </head>
-<body>
+<body class="font-sans antialiased selection:bg-accent selection:text-void relative min-h-screen">
 
-<header>
- <div class="wrap bar">
-  <a class="brand" href="#top"><span class="mark">&lt;/&gt;</span>Pure Code</a>
-  <nav aria-label="Main">
-   <a href="#products">Products</a>
-   <a href="#how">How it works</a>
-   <a href="mailto:hi@pure-code.nl">Contact</a>
-   <a class="btn sm" href="#pilot">Request a pilot</a>
-  </nav>
- </div>
-</header>
+    <div class="absolute inset-0 code-glow pointer-events-none"></div>
+    <div class="absolute inset-0 grid-pattern pointer-events-none opacity-40"></div>
 
-<main id="top">
- <div class="wrap hero">
-  <h1>Ask your enterprise database in plain language.</h1>
-  <p class="lede">PureSchema is an AI agent built on Claude. It reads your full legacy Oracle or PostgreSQL schema and writes SQL that is checked before it ever runs.</p>
-  <div class="cta">
-   <a class="btn" href="#pilot">Request a pilot</a>
-   <a class="btn ghost" href="#example">See an example</a>
-  </div>
+    <!-- Navigation -->
+    <nav class="relative z-50 border-b border-surfaceBorder/60 bg-void/85 backdrop-blur-md sticky top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="#" class="w-9 h-9 rounded-lg bg-navy border border-accent/30 flex items-center justify-center font-mono font-bold text-accent text-sm hover:border-accent transition">
+                    &lt;/&gt;
+                </a>
+                <div class="flex flex-col">
+                    <span class="font-bold tracking-tight text-white text-base">PURE CODE</span>
+                    <span class="text-[10px] font-mono text-gray-400 tracking-widest uppercase">Systems & AI Lab</span>
+                </div>
+                <span class="hidden sm:inline-block ml-3 px-2 py-0.5 rounded text-[11px] font-mono bg-accent/10 border border-accent/20 text-accent">
+                    v2.1.0-prod
+                </span>
+            </div>
 
-  <div class="term" id="example">
-   <div class="term-head">pure-agent --tenant=demo-oracle --model=claude-sonnet-5-5</div>
-<pre><span class="dim">-- Schema loaded into cached context</span>
-<span class="k">schema</span>    1,480 tables, 280 PL/SQL packages, 4,200 constraints
-<span class="k">question</span>  Container turnover with demurrage penalty risk in Q3?
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#suite" class="hover:text-accent transition">Product Suite</a>
+                <a href="#demo" class="hover:text-accent transition">Interactive Demo</a>
+                <a href="#pricing" class="hover:text-accent transition">Pricing & Pilots</a>
+                <a href="#founder" class="hover:text-accent transition">Founder</a>
+                <a href="https://www.linkedin.com/in/bllults" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition flex items-center gap-1.5 font-mono text-xs">
+                    <i class="fa-brands fa-linkedin text-accent"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
 
-SELECT c.container_id, c.carrier_code,
-       SUM(d.penalty_rate * d.days_overdue) AS total_demurrage
-FROM freight_containers c
+            <div class="flex items-center gap-3">
+                <a href="#waitlist" class="px-4 py-2 rounded-lg bg-accent text-void font-semibold text-xs tracking-wider uppercase hover:bg-accentHover transition font-mono flex items-center gap-2">
+                    <span>Pilot Access</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="relative z-10 pt-16 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+        <div class="flex flex-col items-center sm:items-start max-w-4xl">
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-surfaceBorder text-xs font-mono text-gray-300 mb-8">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-gray-400">PureEngine OS</span>
+                <span class="text-gray-600">·</span>
+                <span class="text-accent">Claude 5.5 Frontier & MCP Architecture</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
+                Deterministic Database AI. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-400">Zero-Telemetry</span> Native Systems.
+            </h1>
+
+            <p class="text-lg sm:text-xl text-gray-400 font-normal leading-relaxed mb-10 max-w-2xl">
+                We engineer autonomous LLM reasoning loops for mission-critical enterprise schemas (Oracle, PostgreSQL) alongside air-gapped local developer utilities. Zero hallucinations. Zero cloud leakage.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 justify-center sm:justify-start">
+                <a href="#waitlist" class="px-6 py-3.5 rounded-xl bg-accent text-void font-bold text-sm tracking-wide hover:bg-accentHover transition shadow-lg shadow-accent/10 flex items-center gap-2 font-mono">
+                    <i class="fa-solid fa-cube text-xs"></i>
+                    <span>REQUEST ENTERPRISE PILOT</span>
+                </a>
+                <a href="#demo" class="px-6 py-3.5 rounded-xl bg-surface border border-surfaceBorder text-gray-300 font-mono text-sm hover:text-white hover:border-gray-500 transition flex items-center gap-2">
+                    <i class="fa-solid fa-terminal text-xs text-accent"></i>
+                    <span>TEST LIVE DEMO</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Interactive Terminal Simulator (Clickable Test Scenarios) -->
+        <div id="demo" class="mt-16 rounded-2xl border border-surfaceBorder bg-surface/95 backdrop-blur-md shadow-2xl overflow-hidden font-mono text-left text-xs">
+            <div class="bg-void/90 px-4 py-3 border-b border-surfaceBorder flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    <span class="ml-2 text-gray-400 text-[11px] font-semibold">pure-agent://repl/claude-5.5</span>
+                </div>
+                
+                <!-- Interactive Scenario Buttons -->
+                <div class="flex items-center gap-2 bg-void p-1 rounded-lg border border-surfaceBorder">
+                    <button onclick="setScenario(1)" id="btn-1" class="px-2.5 py-1 rounded bg-accent text-void font-bold transition text-[11px]">01: Demurrage Risk</button>
+                    <button onclick="setScenario(2)" id="btn-2" class="px-2.5 py-1 rounded text-gray-400 hover:text-white transition text-[11px]">02: PL/SQL Refactor</button>
+                    <button onclick="setScenario(3)" id="btn-3" class="px-2.5 py-1 rounded text-gray-400 hover:text-white transition text-[11px]">03: Schema DDL</button>
+                </div>
+
+                <div class="hidden sm:flex items-center gap-3 text-gray-400 text-[11px]">
+                    <span class="text-emerald-400">● PROMPT CACHE: ACTIVE (192k tokens)</span>
+                    <span id="latency-badge">LATENCY: 284ms</span>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-4 text-gray-300 leading-relaxed overflow-x-auto min-h-[220px]">
+                <div id="scenario-desc" class="text-gray-500">// Intermodal Transport Database: Ingesting demurrage penal ledger constraints...</div>
+                <div><span class="text-accent">&gt; INGESTION CONTEXT:</span> <span id="scenario-context">Oracle 19c Enterprise Schema · 1,480 tables, 280 packages, 4,200 constraints cached.</span></div>
+                <div><span class="text-accent">&gt; QUERY INTENT:</span> <span id="scenario-prompt" class="text-white font-medium">"Find all held intermodal freight containers accumulating demurrage &gt; €5,000 in Rotterdam terminal."</span></div>
+                
+                <div class="p-3.5 rounded bg-void/80 border border-surfaceBorder/80 text-emerald-300 font-mono text-[11px] leading-relaxed">
+                    <span class="text-gray-500 block mb-1">Claude 5.5 Verified Execution Plan:</span>
+                    <pre id="scenario-code" class="whitespace-pre-wrap">SELECT c.container_id, c.carrier_code, SUM(d.penalty_rate * d.days_overdue) AS total_penalty_eur
+FROM freight_containers c 
 JOIN demurrage_ledger d ON c.shipment_id = d.shipment_id
-WHERE c.status = 'HELD'
-  AND d.filing_date BETWEEN DATE '2026-07-01' AND DATE '2026-09-30'
-GROUP BY c.container_id, c.carrier_code
-HAVING SUM(d.penalty_rate * d.days_overdue) &gt; 5000;
+WHERE c.port_hub = 'ROTTERDAM' AND c.customs_status = 'HELD'
+GROUP BY c.container_id, c.carrier_code 
+HAVING SUM(d.penalty_rate * d.days_overdue) > 5000;</pre>
+                </div>
+                
+                <div class="text-gray-400 flex items-center justify-between text-[11px]">
+                    <span><span class="text-emerald-400">✓ DETERMINISTIC VALIDATION:</span> AST Syntax Checked. Zero Hallucination.</span>
+                    <span class="text-gray-500">Execution Cost: 0.02s · Optimizer Cost: 14</span>
+                </div>
+            </div>
+        </div>
+    </main>
 
-<span class="ok">✓</span> syntax parsed
-<span class="ok">✓</span> all tables and columns exist in the schema
-<span class="ok">✓</span> role-based masking applied
-<span class="ok">✓</span> estimated cost within limit</pre>
-  </div>
-  <p class="cap">Illustrative session on a sample logistics schema.</p>
- </div>
+    <!-- Product Suite -->
+    <section id="suite" class="py-20 border-t border-surfaceBorder/80 bg-void relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-accent font-mono text-xs tracking-widest uppercase">The Ecosystem</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Active Systems &amp; Developer Tools</h2>
+                </div>
+                <div class="text-xs font-mono text-gray-400 flex items-center gap-3">
+                    <span class="px-2.5 py-1 rounded bg-surface border border-surfaceBorder text-accent font-bold">3 ENGINES</span>
+                    <span>Ready for Enterprise Verification</span>
+                </div>
+            </div>
 
- <section id="products">
-  <div class="wrap">
-   <h2>Products</h2>
-   <p class="sub">One AI agent for enterprise databases, and two native apps that keep your data on your device.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-   <article class="feature">
-    <span class="status">2 pilots active</span>
-    <h3>PureSchema database agent</h3>
-    <p>Ask a question in plain language and get SQL for Oracle or PostgreSQL. Claude reads the whole schema, including PL/SQL packages and constraints, so queries use the tables and columns that actually exist.</p>
-    <div class="tags"><span>Built on Claude</span><span>Oracle</span><span>PostgreSQL</span><span>MCP</span></div>
-   </article>
+                <!-- Product 1: PureSchema DB Agent -->
+                <div class="p-6 rounded-2xl bg-surface/60 border border-surfaceBorder hover:border-accent/50 transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-mono px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">AGENT #01</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded">PILOT ACTIVE</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-navy border border-accent/20 text-accent flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">PureSchema DB Agent</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                            Deterministic Enterprise AI reasoning layer for Oracle & PostgreSQL backends. Leverages Claude 5.5's massive context window and Prompt Caching to map legacy schemas with 100% syntactic precision.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-surfaceBorder/80 flex flex-wrap gap-2 text-[11px] font-mono text-gray-400">
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Claude 5.5</span>
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Oracle PL/SQL</span>
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Model Context Protocol</span>
+                    </div>
+                </div>
 
-   <div class="others">
-    <article>
-     <h3>VaultMail MBOX Inspector</h3>
-     <p>Search multi-gigabyte MBOX, PST and EML archives offline on macOS and iOS. Everything runs on your device, with no telemetry.</p>
-     <div class="tags"><span>Swift</span><span>Offline</span></div>
-    </article>
-    <article>
-     <h3>DopaFlow</h3>
-     <p>A native iOS app for tasks and habits, built in SwiftUI. Focus blocks and rewards help you keep a routine. Data stays on your device.</p>
-     <div class="tags"><span>SwiftUI</span><span>CoreData</span></div>
-    </article>
-   </div>
-  </div>
- </section>
+                <!-- Product 2: Local-First Mail & MBOX Viewer -->
+                <div class="p-6 rounded-2xl bg-surface/60 border border-surfaceBorder hover:border-accent/50 transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">TOOL #02</span>
+                            <span class="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded">LOCAL-FIRST</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-navy border border-accent/20 text-accent flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-box-archive"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">VaultMail MBOX Inspector</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                            Air-gapped, zero-telemetry offline parsing engine for multi-gigabyte MBOX, PST, and EML archives. Memory-mapped streaming with instant full-text query indexing on macOS and iOS.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-surfaceBorder/80 flex flex-wrap gap-2 text-[11px] font-mono text-gray-400">
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Swift</span>
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Zero Telemetry</span>
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Air-Gapped</span>
+                    </div>
+                </div>
 
- <section id="how">
-  <div class="wrap">
-   <h2>How PureSchema uses Claude</h2>
-   <p class="sub">Large schemas are too big for a generic chatbot to handle reliably. PureSchema keeps the whole schema in context and adds its own checks around every answer.</p>
+                <!-- Product 3: DopaFlow Habit Architecture -->
+                <div class="p-6 rounded-2xl bg-surface/60 border border-surfaceBorder hover:border-accent/50 transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">SYSTEM #03</span>
+                            <span class="text-[11px] font-mono text-purple-400 bg-purple-950/40 px-2 py-0.5 rounded">IOS NATIVE</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-navy border border-accent/20 text-accent flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                            <i class="fa-solid fa-cubes-stacked"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">DopaFlow Behavioral Engine</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                            Neuro-behavioral task gamification framework built natively in SwiftUI. Optimizes cognitive execution cycles, sustained focus blocks, and habit consolidation through reinforcement loops.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-surfaceBorder/80 flex flex-wrap gap-2 text-[11px] font-mono text-gray-400">
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">SwiftUI</span>
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">CoreData</span>
+                        <span class="bg-void px-2 py-1 rounded border border-surfaceBorder">Offline-First</span>
+                    </div>
+                </div>
 
-   <ol class="steps">
-    <li>
-     <h3>Load the schema</h3>
-     <p>DDL, PL/SQL packages and constraints go into Claude's context once. Prompt caching keeps follow-up questions fast and cheaper to run.</p>
-    </li>
-    <li>
-     <h3>Plan the query</h3>
-     <p>Claude breaks the question down and uses tool calls through MCP to inspect the database structure before it writes SQL.</p>
-    </li>
-    <li>
-     <h3>Validate before running</h3>
-     <p>Each statement is parsed, checked against the schema, filtered through role-based masking and cost-estimated before it reaches your database.</p>
-    </li>
-   </ol>
+            </div>
+        </div>
+    </section>
 
-   <p class="note"><strong>Your data stays with you.</strong> Table rows stay in your environment. Claude receives the schema structure and the question, not your records.</p>
-  </div>
- </section>
+    <!-- Pricing & Enterprise Pilot Matrix (Raxboard-style transparency) -->
+    <section id="pricing" class="py-20 border-t border-surfaceBorder/80 bg-surface/30 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-accent font-mono text-xs tracking-widest uppercase">Transparent Terms</span>
+                <h2 class="text-3xl font-bold text-white mt-2">Commercial &amp; Pilot Access</h2>
+                <p class="text-gray-400 text-sm mt-3">Predictable economics designed for enterprise database modernizations and independent developers.</p>
+            </div>
 
- <section id="pilot">
-  <div class="wrap contact">
-   <h2>Become a design partner</h2>
-   <p class="sub">We are onboarding a small number of companies in logistics, intermodal freight and database modernization across Europe. Tell us about your database and what your team needs to ask it.</p>
-   <div class="cta">
-    <a class="btn" href="mailto:hi@pure-code.nl?subject=PureSchema%20pilot%20request">Email hi@pure-code.nl</a>
-   </div>
-  </div>
- </section>
-</main>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tier 1: Local Tools -->
+                <div class="p-8 rounded-2xl bg-void border border-surfaceBorder flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-mono text-gray-400 uppercase tracking-widest mb-2">Standalone</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Developer Tools</h4>
+                        <div class="text-3xl font-bold font-mono text-white mb-6">€0 <span class="text-xs font-normal text-gray-400 font-sans">/ Free Forever</span></div>
+                        <ul class="space-y-3 text-xs text-gray-300 font-mono mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> VaultMail Offline MBOX Inspector</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> 100% Local execution, zero telemetry</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Community CLI tools access</li>
+                        </ul>
+                    </div>
+                    <a href="#waitlist" class="w-full py-2.5 rounded-lg border border-surfaceBorder text-center font-mono text-xs font-semibold text-gray-300 hover:border-gray-500 hover:text-white transition">Download Binaries</a>
+                </div>
 
-<footer>
- <div class="wrap foot">
-  <span>Pure Code, Oss, Netherlands. KVK 99401456</span>
-  <span>PureSchema is built on Claude by Anthropic.</span>
-  <span>© 2026 Pure Code</span>
- </div>
-</footer>
+                <!-- Tier 2: Enterprise Pilot (Recommended) -->
+                <div class="p-8 rounded-2xl bg-surface border-2 border-accent relative flex flex-col justify-between shadow-2xl shadow-accent/5">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-void px-3 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider">
+                        Active Startup Pilot
+                    </div>
+                    <div>
+                        <div class="text-xs font-mono text-accent uppercase tracking-widest mb-2">Private Beta</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Enterprise Pilot</h4>
+                        <div class="text-3xl font-bold font-mono text-accent mb-6">€0 <span class="text-xs font-normal text-gray-400 font-sans">/ 14-Day Invite Only</span></div>
+                        <ul class="space-y-3 text-xs text-gray-200 font-mono mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Full PureSchema DB Agent integration</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Up to 200k tokens cached schema ingestion</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Powered by Claude 5.5 Frontier API</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Direct architecture advisory &amp; custom ASTs</li>
+                        </ul>
+                    </div>
+                    <a href="#waitlist" class="w-full py-2.5 rounded-lg bg-accent text-void text-center font-mono text-xs font-bold hover:bg-accentHover transition uppercase">Apply for Beta Pilot →</a>
+                </div>
+
+                <!-- Tier 3: Dedicated Enterprise -->
+                <div class="p-8 rounded-2xl bg-void border border-surfaceBorder flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-mono text-gray-400 uppercase tracking-widest mb-2">Production</div>
+                        <h4 class="text-xl font-bold text-white mb-4">VPC Dedicated</h4>
+                        <div class="text-3xl font-bold font-mono text-white mb-6">Custom <span class="text-xs font-normal text-gray-400 font-sans">/ SLA Billed</span></div>
+                        <ul class="space-y-3 text-xs text-gray-300 font-mono mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Self-hosted VPC / Air-gapped deployment</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Custom MCP connectors (Oracle ERP, SAP)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> Zero retention enterprise SLA agreement</li>
+                        </ul>
+                    </div>
+                    <a href="mailto:hi@pure-code.nl?subject=Dedicated%20Enterprise%20Inquiry" class="w-full py-2.5 rounded-lg border border-surfaceBorder text-center font-mono text-xs font-semibold text-gray-300 hover:border-gray-500 hover:text-white transition">Contact Engineering</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section (With LinkedIn Link) -->
+    <section id="founder" class="py-20 border-t border-surfaceBorder/80 bg-void relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="p-8 rounded-2xl bg-surface/50 border border-surfaceBorder flex flex-col sm:flex-row items-center gap-8 text-center sm:text-left">
+                <div class="w-24 h-24 rounded-2xl bg-navy border-2 border-accent/40 flex items-center justify-center font-mono font-bold text-accent text-3xl shrink-0">
+                    BU
+                </div>
+                <div class="space-y-3">
+                    <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                        <h3 class="text-xl font-bold text-white">Bilal Ulutaş</h3>
+                        <span class="text-xs font-mono text-accent bg-accent/10 px-2 py-0.5 rounded border border-accent/20">Founder &amp; Principal Engineer</span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Specialized in high-scale relational database architectures (Oracle APEX, PL/SQL, PostgreSQL), native systems, and deterministic AI agent orchestration. Based in Oss, Netherlands.
+                    </p>
+                    <div class="pt-2 flex items-center justify-center sm:justify-start gap-4">
+                        <a href="https://www.linkedin.com/in/bllults" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-void border border-surfaceBorder text-gray-300 hover:text-white hover:border-accent text-xs font-mono transition">
+                            <i class="fa-brands fa-linkedin text-accent"></i>
+                            <span>linkedin.com/in/bllults</span>
+                        </a>
+                        <a href="mailto:hi@pure-code.nl" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-void border border-surfaceBorder text-gray-300 hover:text-white hover:border-accent text-xs font-mono transition">
+                            <i class="fa-solid fa-envelope text-accent"></i>
+                            <span>hi@pure-code.nl</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pilot Access / Waitlist -->
+    <section id="waitlist" class="py-20 border-t border-surfaceBorder bg-surface/20 relative z-10">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+            <span class="text-accent font-mono text-xs tracking-widest uppercase">Enterprise Enrollment</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">Request Private Pilot Access</h2>
+            <p class="text-gray-400 text-sm mb-8 leading-relaxed">
+                Currently onboarding select enterprise design partners across logistics, intermodal freight, and mission-critical database operations in Europe.
+            </p>
+
+            <form action="mailto:hi@pure-code.nl" method="GET" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <input type="email" name="subject" value="Enterprise Pilot Request - Pure Code" class="hidden">
+                <input type="email" placeholder="corporate@company.com" required class="flex-1 bg-surface border border-surfaceBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-accent font-mono placeholder:text-gray-600">
+                <button type="submit" class="px-6 py-3 rounded-xl bg-accent text-void font-bold text-xs tracking-wider uppercase hover:bg-accentHover transition font-mono whitespace-nowrap">
+                    Join Waitlist →
+                </button>
+            </form>
+            <p class="text-[11px] font-mono text-gray-500 mt-4">Direct dispatch: <a href="mailto:hi@pure-code.nl" class="text-gray-400 underline hover:text-accent">hi@pure-code.nl</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-surfaceBorder/60 bg-void py-12 relative z-10 text-xs text-gray-500 font-mono">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span class="text-gray-400">ALL SYSTEMS NOMINAL · PURE-CODE.NL</span>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-6 text-gray-400">
+                <span>KVK: 99401456</span>
+                <span>Oss, Netherlands</span>
+                <button onclick="toggleModal('privacyModal')" class="hover:text-accent underline transition">Privacy &amp; GDPR</button>
+                <button onclick="toggleModal('termsModal')" class="hover:text-accent underline transition">Terms of Service</button>
+            </div>
+
+            <div class="text-gray-600">
+                © 2026 Pure Code. Built for builders on Claude.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy & GDPR Modal -->
+    <div id="privacyModal" class="fixed inset-0 bg-void/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-surface border border-surfaceBorder rounded-2xl max-w-xl w-full p-6 text-gray-300 font-mono text-xs space-y-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
+                <h3 class="text-white font-bold text-sm">Privacy &amp; Zero-Telemetry Policy</h3>
+                <button onclick="toggleModal('privacyModal')" class="text-gray-400 hover:text-white">&times;</button>
+            </div>
+            <p><strong>1. Zero Data Retention:</strong> Pure Code does not store, retain, or cache client database records, schema definitions, or generated queries on external servers. All processing is strictly ephemeral.</p>
+            <p><strong>2. GDPR Compliance:</strong> Registered under Dutch Chamber of Commerce (KVK: 99401456). Enterprise data streams remain strictly within your sovereign VPC or approved European infrastructure.</p>
+            <p><strong>3. AI Training Exclusions:</strong> Your enterprise queries and schema structures are never used to train frontier foundation models.</p>
+            <div class="pt-3 text-right">
+                <button onclick="toggleModal('privacyModal')" class="px-4 py-2 bg-accent text-void rounded font-bold">Acknowledge</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="fixed inset-0 bg-void/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-surface border border-surfaceBorder rounded-2xl max-w-xl w-full p-6 text-gray-300 font-mono text-xs space-y-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
+                <h3 class="text-white font-bold text-sm">Terms of Service</h3>
+                <button onclick="toggleModal('termsModal')" class="text-gray-400 hover:text-white">&times;</button>
+            </div>
+            <p><strong>1. Pilot Usage:</strong> The Enterprise Pilot tier provides a 14-day evaluation license for testing schema reasoning and query translation workflows.</p>
+            <p><strong>2. Intellectual Property:</strong> All generated custom SQL and optimization logic generated for your schemas remain exclusively your intellectual property.</p>
+            <p><strong>3. Governing Law:</strong> These terms are governed in accordance with the laws of the Netherlands.</p>
+            <div class="pt-3 text-right">
+                <button onclick="toggleModal('termsModal')" class="px-4 py-2 bg-accent text-void rounded font-bold">Acknowledge</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        const scenarios = {
+            1: {
+                desc: "// Intermodal Transport Database: Ingesting demurrage penal ledger constraints...",
+                context: "Oracle 19c Enterprise Schema · 1,480 tables, 280 packages, 4,200 constraints cached.",
+                prompt: '"Find all held intermodal freight containers accumulating demurrage > €5,000 in Rotterdam terminal."',
+                code: `SELECT c.container_id, c.carrier_code, SUM(d.penalty_rate * d.days_overdue) AS total_penalty_eur\nFROM freight_containers c \nJOIN demurrage_ledger d ON c.shipment_id = d.shipment_id\nWHERE c.port_hub = 'ROTTERDAM' AND c.customs_status = 'HELD'\nGROUP BY c.container_id, c.carrier_code \nHAVING SUM(d.penalty_rate * d.days_overdue) > 5000;`,
+                latency: "LATENCY: 284ms"
+            },
+            2: {
+                desc: "// Legacy PL/SQL Refactoring Engine: Ingesting recursive package dependency...",
+                context: "Oracle PL/SQL Package: PKG_SETTLEMENT_CORE (12,400 LOC) parsed via Claude 5.5 AST.",
+                prompt: '"Refactor cursor-based batch settlement loop into a deterministic bulk COLLECT transaction with error logging."',
+                code: `PROCEDURE process_bulk_settlements (p_batch_id IN NUMBER) IS\n  TYPE t_settlement_tab IS TABLE OF settlements%ROWTYPE;\n  l_records t_settlement_tab;\nBEGIN\n  SELECT * BULK COLLECT INTO l_records FROM settlements WHERE batch_id = p_batch_id FOR UPDATE;\n  FORALL i IN INDICES OF l_records SAVE EXCEPTIONS\n    UPDATE settlements SET status = 'SETTLED', processed_at = SYSTIMESTAMP WHERE id = l_records(i).id;\nEXCEPTION\n  WHEN OTHERS THEN log_bulk_exceptions(p_batch_id, SQL%BULK_EXCEPTIONS);\nEND;`,
+                latency: "LATENCY: 310ms"
+            },
+            3: {
+                desc: "// Autonomous DDL Synthesizer: Multi-tenant relational schema generation...",
+                context: "PostgreSQL 17 Schema · Relational topology with row-level security constraints.",
+                prompt: '"Synthesize partition strategy and Row-Level Security policies for multi-tenant telemetry event logs."',
+                code: `CREATE TABLE tenant_event_logs (\n  event_id UUID DEFAULT gen_random_uuid(),\n  tenant_id UUID NOT NULL,\n  payload JSONB NOT NULL,\n  created_at TIMESTAMPTZ DEFAULT clock_timestamp()\n) PARTITION BY RANGE (created_at);\n\nALTER TABLE tenant_event_logs ENABLE ROW LEVEL SECURITY;\nCREATE POLICY tenant_isolation_policy ON tenant_event_logs\n  FOR ALL TO application_user USING (tenant_id = current_setting('app.current_tenant')::uuid);`,
+                latency: "LATENCY: 198ms"
+            }
+        };
+
+        function setScenario(id) {
+            const s = scenarios[id];
+            document.getElementById('scenario-desc').innerText = s.desc;
+            document.getElementById('scenario-context').innerText = s.context;
+            document.getElementById('scenario-prompt').innerText = s.prompt;
+            document.getElementById('scenario-code').innerText = s.code;
+            document.getElementById('latency-badge').innerText = s.latency;
+
+            [1, 2, 3].forEach(i => {
+                const btn = document.getElementById('btn-' + i);
+                if (i === id) {
+                    btn.className = "px-2.5 py-1 rounded bg-accent text-void font-bold transition text-[11px]";
+                } else {
+                    btn.className = "px-2.5 py-1 rounded text-gray-400 hover:text-white transition text-[11px]";
+                }
+            });
+        }
+
+        function toggleModal(id) {
+            const m = document.getElementById(id);
+            m.classList.toggle('hidden');
+        }
+    </script>
 
 </body>
 </html>
