@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy · Pure Code</title>
+    <meta name="description" content="Privacy Policy and Zero-Telemetry Commitment for Pure Code native applications and systems.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23101c35'/><path d='M35 35 L20 50 L35 65 M55 30 L45 70 M65 35 L80 50 L65 65' stroke='%2316c6c2' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        void: '#070a13',
+                        surface: '#0f172a',
+                        surfaceBorder: '#1e293b',
+                        accent: '#16c6c2',
+                        accentHover: '#13ada9',
+                        navy: '#101c35',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #070a13;
+            color: #f1f5f9;
+        }
+        .code-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(22, 198, 194, 0.12) 0%, transparent 60%);
+        }
+        .grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-accent selection:text-void relative min-h-screen">
+
+    <div class="absolute inset-0 code-glow pointer-events-none"></div>
+    <div class="absolute inset-0 grid-pattern pointer-events-none opacity-40"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 border-b border-surfaceBorder/60 bg-void/85 backdrop-blur-md sticky top-0">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-lg bg-navy border border-accent/30 flex items-center justify-center font-mono font-bold text-accent text-sm group-hover:border-accent transition">
+                    &lt;/&gt;
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold tracking-tight text-white text-base">PURE CODE</span>
+                    <span class="text-[10px] font-mono text-gray-400 tracking-widest uppercase">Systems &amp; AI Lab</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-4 text-xs font-mono">
+                <a href="/" class="text-gray-400 hover:text-white transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left text-[10px] text-accent"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header Pill & Title -->
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-surfaceBorder text-xs font-mono text-gray-300 mb-4">
+                <span class="w-2 h-2 rounded-full bg-accent"></span>
+                <span>Legal &amp; Data Governance</span>
+                <span class="text-gray-600">·</span>
+                <span class="text-gray-400">Effective: November 2026</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+                Privacy Policy &amp; Zero-Telemetry Standard
+            </h1>
+            <p class="text-gray-400 text-sm sm:text-base leading-relaxed font-mono">
+                Pure Code operates on a strict local-first and zero-knowledge architecture. Your files, database schemas, and personal interactions remain on your device.
+            </p>
+        </div>
+
+        <!-- Policy Body -->
+        <div class="space-y-10 text-gray-300 text-sm leading-relaxed border-t border-surfaceBorder/80 pt-10">
+
+            <!-- Section 1 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">01.</span> Scope &amp; Identity
+                </h2>
+                <p>
+                    This Privacy Policy applies to all software applications, developer utilities, and web services published by <strong>Pure Code</strong> (registered with the Dutch Chamber of Commerce under KVK: 98970631, located in Oss, the Netherlands).
+                </p>
+                <p>
+                    This covers our consumer and developer client applications distributed via the Apple App Store, macOS binaries, and our enterprise web platforms, including but not limited to <em>VaultMail / ArchiveMail Viewer</em>, <em>DopaFlow</em>, and <em>PureSchema</em>.
+                </p>
+            </section>
+
+            <!-- Section 2 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">02.</span> Local-First File Processing (MBOX, Archives, Schemas)
+                </h2>
+                <p>
+                    For our file parsing and viewer utilities (such as ArchiveMail Viewer):
+                </p>
+                <ul class="list-disc list-inside space-y-2 pl-2 text-gray-400 font-mono text-xs">
+                    <li><strong>No Server Uploads:</strong> When you open email archives (MBOX, EML, PST) or data files, parsing is executed entirely in-memory on your local Apple device (iOS/macOS sandbox).</li>
+                    <li><strong>Zero Cloud Telemetry:</strong> Files, attachments, email headers, and message bodies never leave your physical hardware. We run no analytical servers and maintain zero access logs.</li>
+                    <li><strong>No Temporary Storage:</strong> When you close or terminate the application, memory buffers are completely reclaimed by the operating system.</li>
+                </ul>
+            </section>
+
+            <!-- Section 3 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">03.</span> Data We Do NOT Collect
+                </h2>
+                <div class="p-4 rounded-xl bg-surface/80 border border-surfaceBorder font-mono text-xs space-y-2">
+                    <div class="text-accent font-bold">WE NEVER COLLECT, STORE, OR TRANSMIT:</div>
+                    <ul class="space-y-1.5 text-gray-400">
+                        <li>• Personally Identifiable Information (Names, addresses, personal phone numbers).</li>
+                        <li>• Location Data or GPS coordinates.</li>
+                        <li>• Device identifiers (IDFA, MAC address, advertising identifiers).</li>
+                        <li>• Keystrokes, search queries inside local files, or productivity logs.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 4 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">04.</span> In-App Purchases &amp; Subscriptions
+                </h2>
+                <p>
+                    If our mobile applications offer paid features, tip jars, or subscriptions:
+                </p>
+                <p class="text-gray-400">
+                    All payment processing and financial transactions are handled solely by <strong>Apple Inc. via StoreKit and the App Store</strong>. Pure Code does not receive, process, or store your credit card numbers, billing addresses, or banking information. Apple handles all billing under their respective terms and privacy policies.
+                </p>
+            </section>
+
+            <!-- Section 5 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">05.</span> Enterprise Web Services &amp; AI Workflows
+                </h2>
+                <p>
+                    For clients participating in the <em>PureSchema</em> private pilot or using web features connected to LLM APIs (e.g., Anthropic Claude models):
+                </p>
+                <ul class="list-disc list-inside space-y-2 pl-2 text-gray-400 font-mono text-xs">
+                    <li>Data processed via enterprise API endpoints operates strictly under zero-retention policies.</li>
+                    <li>Enterprise schema definitions and relational topologies are strictly ephemeral and are <strong>never</strong> utilized to train or fine-tune foundation AI models.</li>
+                </ul>
+            </section>
+
+            <!-- Section 6 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">06.</span> European GDPR Compliance &amp; Your Rights
+                </h2>
+                <p>
+                    Under the General Data Protection Regulation (GDPR) (EU 2016/679), European users retain statutory rights regarding their personal data:
+                </p>
+                <p class="text-gray-400">
+                    Because our native client apps function locally and collect no telemetry or user profiles, we do not hold personal databases to access, rectify, or erase. However, if you contact us directly via email, your correspondence is maintained solely to answer technical support requests and will be purged upon written request.
+                </p>
+            </section>
+
+            <!-- Section 7 -->
+            <section class="space-y-3">
+                <h2 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-accent">07.</span> Contact &amp; Legal Entity
+                </h2>
+                <p>
+                    If you have questions, feedback, or support requests regarding this Privacy Policy or our software architectures:
+                </p>
+                <div class="p-5 rounded-xl bg-surface border border-surfaceBorder font-mono text-xs space-y-2 text-gray-300">
+                    <div><strong>Legal Entity:</strong> Pure Code (Eenmanszaak)</div>
+                    <div><strong>Chamber of Commerce (KVK):</strong> 98970631</div>
+                    <div><strong>Jurisdiction:</strong> Noord-Brabant, The Netherlands</div>
+                    <div><strong>Direct Inquiries:</strong> <a href="mailto:hi@pure-code.nl" class="text-accent underline">hi@pure-code.nl</a></div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-surfaceBorder/60 bg-void py-12 relative z-10 text-xs text-gray-500 font-mono">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span class="text-gray-400">ALL SYSTEMS NOMINAL · PURE-CODE.NL</span>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-6 text-gray-400">
+                <span>KVK: 98970631</span>
+                <span>Oss, Netherlands</span>
+                <a href="/" class="hover:text-accent transition">Home</a>
+            </div>
+
+            <div class="text-gray-600">
+                © 2026 Pure Code. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
